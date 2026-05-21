@@ -24,13 +24,13 @@ args = "Start application"
 name = "Start application"
 author = "agent"
 
-[[workflows.workflow.tasks]]
-task = "shell.exec"
-args = "php -S 0.0.0.0:8080 index.php"
-waitForPort = 8080
-
 [workflows.workflow.metadata]
 outputType = "webview"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "php -S 0.0.0.0:8080"
+waitForPort = 8080
 
 [agent]
 stack = "PNPM_WORKSPACE"
@@ -47,3 +47,6 @@ externalPort = 80
 [[ports]]
 localPort = 8081
 externalPort = 8081
+
+[nix]
+packages = ["htop"]
