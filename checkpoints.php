@@ -9,12 +9,12 @@ Link: <a href="https://github.com/OkiDokiPokiWokie/Web-Dev-OSU-Remake/commit/296
 Reflection: Made the login page, tested the account creation and account login.<br><br>
 
 Name: #03-Home-Page <br>
-Completion Date: <br>
-Link: <a href="" target="_blank">Commit</a><br>
-Reflection: <br><br>
+Completion Date: April 22, 2026<br>
+Link: <a href="https://github.com/OkiDokiPokiWokie/Web-Dev-OSU-Remake/commit/cf151a96e5d63f48d09143fa3631c0c40a76a1da" target="_blank">Commit</a><br>
+Reflection: Set up the home page, tested the nav bar showed "admin panel link if user role="admin"<br><br>
 
 Name: #04-User-Profile <br>
-Completion Date: <br>
+Completion Date: April 22, 2026<br>
 Link: <a href="" target="_blank">Commit</a><br>
 Reflection: <br><br>
 

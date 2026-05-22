@@ -5,6 +5,6 @@
         "email": "user@gmail.com",
         "role": "admin",
         "created_at": "2026-05-21",
-        "pfp": "assets\/img\/default-pfp.png"
+        "pfp": "uploads\/pfp\/user.png"
     }
 ]
