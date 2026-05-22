@@ -15,8 +15,8 @@ Reflection: Set up the home page, tested the nav bar showed "admin panel link if
 
 Name: #04-User-Profile <br>
 Completion Date: April 22, 2026<br>
-Link: <a href="" target="_blank">Commit</a><br>
-Reflection: <br><br>
+Link: <a href="https://github.com/OkiDokiPokiWokie/Web-Dev-OSU-Remake/commit/21ff65357b3f2db57f79a47fd57a435feb23eaba" target="_blank">Commit</a><br>
+Reflection: Tested profile.php visibility, and uploading a player profile image.<br><br>
 
 Name: #05-Game-Engine-Core <br>
 Completion Date: <br>
