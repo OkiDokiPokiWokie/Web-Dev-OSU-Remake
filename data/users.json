@@ -1,1 +1,10 @@
-[]
+[
+    {
+        "username": "user",
+        "password_hash": "$2y$12$JZeZ2H.gVVS3EGA4D7jXmuGlBDGpJdGXBUajJ.aQLA9in7u7Ne.qi",
+        "email": "user@gmail.com",
+        "role": "admin",
+        "created_at": "2026-05-21",
+        "pfp": "assets\/img\/default-pfp.png"
+    }
+]

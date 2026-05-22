@@ -1,12 +1,12 @@
 Name: #01-Project-Setup <br>
-Completion Date: <br>
+Completion Date: April 20, 2026<br>
 Link: <a href="https://github.com/OkiDokiPokiWokie/Web-Dev-OSU-Remake/commit/30981744cf134c98e979f029b2515192a3ee4b9d" target="_blank">Commit</a><br>
 Reflection: Set up the file structure and page routing<br><br>
 
 Name: #02-Navigation-Routing <br>
-Completion Date: <br>
-Link: <a href="" target="_blank">Commit</a><br>
-Reflection: <br><br>
+Completion Date: April 21, 2026<br>
+Link: <a href="https://github.com/OkiDokiPokiWokie/Web-Dev-OSU-Remake/commit/296df8b0ec2783a55c4be4d2d0d18be6f40504e0" target="_blank">Commit</a><br>
+Reflection: Made the login page, tested the account creation and account login.<br><br>
 
 Name: #03-Home-Page <br>
 Completion Date: <br>

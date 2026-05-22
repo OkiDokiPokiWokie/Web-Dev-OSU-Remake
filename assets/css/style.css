@@ -1,0 +1,60 @@
+/* =========================================
+   Global Stylesheet
+   Project: osu! Web Clone
+   ========================================= */
+
+/* 1. Global Reset & Dark Theme Background */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #121216; /* Deep dark background */
+    color: #ffffff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* 2. Navigation Bar (Header) */
+header {
+    background-color: #1a1a24;
+    border-bottom: 3px solid #ff66aa; /* osu! pink accent */
+    padding: 15px 0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+nav ul {
+    list-style-type: none; /* Removes the bullet points */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+nav ul li a {
+    color: #ffffff;
+    text-decoration: none; /* Removes the blue underline */
+    font-weight: 600;
+    font-size: 1.1em;
+    transition: color 0.2s ease;
+}
+
+nav ul li a:hover {
+    color: #ff66aa; /* Turns pink when hovered */
+}
+
+/* 3. Main Content Wrapper */
+main {
+    /* Ensures the footer gets pushed to the bottom of the screen */
+    min-height: calc(100vh - 145px); 
+    padding-bottom: 40px;
+}
+
+/* 4. Footer */
+footer {
+    text-align: center;
+    padding: 20px;
+    color: #888899;
+    font-size: 0.9em;
+    border-top: 1px solid #2a2a35;
+    background-color: #1a1a24;
+}
