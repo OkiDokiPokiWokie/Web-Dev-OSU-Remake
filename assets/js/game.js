@@ -29,6 +29,10 @@ export class GameEngine {
         this.misses = 0;
         this.totalHitValueAwarded = 0;
 
+        // Interactive Tracking Coordinates (1920x1080 Space)
+        this.mouseX = 0;
+        this.mouseY = 0;
+
         // Gameplay Constants
         this.circleRadius = 40;
         this.approachDuration = 800; // ms before hit time that circle appears
@@ -51,7 +55,28 @@ export class GameEngine {
             // 1. Fetch and parse beatmap
             const osuFileResponse = await fetch(`/${this.beatmapFolder}/beatmap.osu`);
             const osuText = await osuFileResponse.text();
-            this.hitObjects = parseBeatmap(osuText, this.canvas.width, this.canvas.height);
+
+            // osu! uses a 512x384 playfield centered inside a 640x480 standard 4:3 screen.
+            // To scale this to our 1920x1080 (16:9) canvas without clipping edges or stretching horizontally:
+            // Scale factor: 1080 / 480 = 2.25.
+            // Playfield Size: 512 * 2.25 = 1152, 384 * 2.25 = 864.
+            const playfieldWidth = 1152;
+            const playfieldHeight = 864;
+
+            // Parse to the strictly scaled 4:3 bounds instead of the full canvas
+            this.hitObjects = parseBeatmap(osuText, playfieldWidth, playfieldHeight);
+
+            // Shift all objects to perfectly center the playfield inside the 16:9 space
+            const offsetX = (this.canvas.width - playfieldWidth) / 2; // (1920 - 1152) / 2 = 384
+            const offsetY = (this.canvas.height - playfieldHeight) / 2; // (1080 - 864) / 2 = 108
+
+            this.hitObjects.forEach((obj, index) => {
+                obj.x += offsetX;
+                obj.y += offsetY;
+                // Assign a sequence number to each circle (1 to total circles)
+                obj.number = index + 1; 
+            });
+
             this.totalCircles = this.hitObjects.length;
 
             // 2. Load audio
@@ -67,15 +92,68 @@ export class GameEngine {
     }
 
     bindEvents() {
-        // Start game on click if waiting
-        this.canvas.addEventListener('click', (e) => {
+        // High-precision tracking function that calculates true internal game canvas positions 
+        // by factoring out CSS object-fit letterbox/pillarbox padding offsets.
+        const updateCursorPosition = (clientX, clientY) => {
+            const rect = this.canvas.getBoundingClientRect();
+            const canvasRatio = this.canvas.width / this.canvas.height; // 1920 / 1080 (1.777)
+            const elementRatio = rect.width / rect.height;
+
+            let actualRenderingWidth = rect.width;
+            let actualRenderingHeight = rect.height;
+            let letterboxLeft = 0;
+            let letterboxTop = 0;
+
+            if (elementRatio > canvasRatio) {
+                // Pillarboxed (Black padding bars added on the Left & Right sides)
+                actualRenderingHeight = rect.height;
+                actualRenderingWidth = actualRenderingHeight * canvasRatio;
+                letterboxLeft = (rect.width - actualRenderingWidth) / 2;
+            } else {
+                // Letterboxed (Black padding bars added on the Top & Bottom sides)
+                actualRenderingWidth = rect.width;
+                actualRenderingHeight = actualRenderingWidth / canvasRatio;
+                letterboxTop = (rect.height - actualRenderingHeight) / 2;
+            }
+
+            // Isolate layout offsets to map localized mouse coordinates
+            const normalizedX = clientX - rect.left - letterboxLeft;
+            const normalizedY = clientY - rect.top - letterboxTop;
+
+            // Project safely into the target internal scaling domain
+            this.mouseX = (normalizedX / actualRenderingWidth) * this.canvas.width;
+            this.mouseY = (normalizedY / actualRenderingHeight) * this.canvas.height;
+        };
+
+        // Continually track mouse movements across the window surface
+        this.canvas.addEventListener('mousemove', (e) => {
+            updateCursorPosition(e.clientX, e.clientY);
+        });
+
+        // Combined macro executor evaluating raw player hits
+        const executeHitAction = () => {
             if (!this.audioHandler.isPlaying && !this.isGameEnded && this.hitObjects.length > 0) {
                 this.startGame();
                 return;
             }
 
             if (this.audioHandler.isPlaying && !this.isGameEnded) {
-                this.handleGameplayClick(e);
+                this.checkHitAtCursor();
+            }
+        };
+
+        // Fire instantly on Mousedown instead of waiting for full Click release
+        this.canvas.addEventListener('mousedown', (e) => {
+            e.preventDefault(); 
+            updateCursorPosition(e.clientX, e.clientY);
+            executeHitAction();
+        });
+
+        // Implement native Z / X keyboard hitting options
+        window.addEventListener('keydown', (e) => {
+            const key = e.key.toLowerCase();
+            if (key === 'z' || key === 'x') {
+                executeHitAction();
             }
         });
     }
@@ -94,7 +172,8 @@ export class GameEngine {
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.fillStyle = "#ffffff";
         this.ctx.font = "30px sans-serif";
-        this.ctx.fillText(`Click anywhere to start`, this.canvas.width / 2, this.canvas.height / 2);
+        this.ctx.textAlign = "center";
+        this.ctx.fillText(`Click anywhere or press Z/X to start`, this.canvas.width / 2, this.canvas.height / 2);
         this.ctx.font = "20px sans-serif";
         this.ctx.fillStyle = "#888899";
         this.ctx.fillText(`${this.mapTitle} [${this.difficulty}]`, this.canvas.width / 2, this.canvas.height / 2 + 40);
@@ -127,7 +206,6 @@ export class GameEngine {
         });
 
         // Draw hit circles and approach rings
-        // Draw in reverse order so newer circles appear underneath older ones
         for (let i = this.visibleObjects.length - 1; i >= 0; i--) {
             const circle = this.visibleObjects[i];
 
@@ -139,6 +217,13 @@ export class GameEngine {
             this.ctx.lineWidth = 3;
             this.ctx.strokeStyle = "#ffffff";
             this.ctx.stroke();
+
+            // Draw Number inside the Circle
+            this.ctx.fillStyle = "#ffffff";
+            this.ctx.font = "bold 26px sans-serif";
+            this.ctx.textAlign = "center";
+            this.ctx.textBaseline = "middle";
+            this.ctx.fillText(circle.number, circle.x, circle.y);
 
             // Calculate and Draw Approach Ring
             const approachRadius = this.circleRadius * (1 + 2 * ((circle.time - currentTime) / this.approachDuration));
@@ -165,23 +250,17 @@ export class GameEngine {
         this.animationFrameId = requestAnimationFrame(() => this.gameLoop());
     }
 
-    handleGameplayClick(e) {
-        const rect = this.canvas.getBoundingClientRect();
-        // Scale mouse coordinates to actual canvas resolution
-        const scaleX = this.canvas.width / rect.width;
-        const scaleY = this.canvas.height / rect.height;
-        const clickX = (e.clientX - rect.left) * scaleX;
-        const clickY = (e.clientY - rect.top) * scaleY;
+    checkHitAtCursor() {
         const currentTime = this.audioHandler.getCurrentTime();
 
-        // Find the earliest visible object the user clicked on
+        // Find the earliest visible object the user's mapped position intersects
         let clickedObject = null;
         for (let i = 0; i < this.visibleObjects.length; i++) {
             const obj = this.visibleObjects[i];
-            const dist = Math.sqrt(Math.pow(clickX - obj.x, 2) + Math.pow(clickY - obj.y, 2));
+            const dist = Math.sqrt(Math.pow(this.mouseX - obj.x, 2) + Math.pow(this.mouseY - obj.y, 2));
             if (dist <= this.circleRadius) {
                 clickedObject = obj;
-                break; // Break on the first (oldest) one found
+                break; // Break on the oldest valid object found
             }
         }
 
@@ -204,7 +283,6 @@ export class GameEngine {
         if (hitValue > 0) {
             this.combo++;
             if (this.combo > this.maxCombo) this.maxCombo = this.combo;
-            // Simple combo multiplier formula as per PRD
             this.score += Math.floor(hitValue * Math.max(1, this.combo * 0.1 + 1));
             this.totalHitValueAwarded += hitValue;
             label = hitValue.toString();
@@ -218,7 +296,7 @@ export class GameEngine {
             x: circle.x,
             y: circle.y,
             text: label,
-            color: hitValue === 0 ? "#ff4d4d" : "#32cd32",
+            color: hitValue === 0 ? "#ff4d4d" : (hitValue === 300 ? "#ffcc11" : "#32cd32"),
             spawnTime: this.audioHandler.getCurrentTime()
         });
     }
@@ -227,6 +305,7 @@ export class GameEngine {
         this.ctx.fillStyle = "#ffffff";
         this.ctx.font = "24px sans-serif";
         this.ctx.textAlign = "left";
+        this.ctx.textBaseline = "alphabetic"; // Reset baseline for HUD text
         this.ctx.fillText(`Score: ${this.score}`, 20, 40);
         this.ctx.fillText(`Combo: ${this.combo}x`, 20, 70);
     }
@@ -234,6 +313,7 @@ export class GameEngine {
     drawHitTexts(currentTime) {
         this.ctx.textAlign = "center";
         this.ctx.font = "bold 20px sans-serif";
+        this.ctx.textBaseline = "alphabetic"; // Reset baseline for hit texts
 
         // Remove texts older than 500ms
         this.hitTexts = this.hitTexts.filter(ht => currentTime - ht.spawnTime < 500);
@@ -243,7 +323,6 @@ export class GameEngine {
             const alpha = 1 - (age / 500); // Fade out
             this.ctx.fillStyle = ht.color;
             this.ctx.globalAlpha = alpha;
-            // Float up slightly
             this.ctx.fillText(ht.text, ht.x, ht.y - (age * 0.05));
             this.ctx.globalAlpha = 1.0;
         });
@@ -254,14 +333,12 @@ export class GameEngine {
         this.audioHandler.stop();
         cancelAnimationFrame(this.animationFrameId);
 
-        // Calculate accuracy safely
         let accuracy = 0;
         if (this.totalCircles > 0) {
             accuracy = (this.totalHitValueAwarded / (this.totalCircles * 300)) * 100;
         }
-        accuracy = Math.round(accuracy * 10) / 10; // Round to 1 decimal place
+        accuracy = Math.round(accuracy * 10) / 10;
 
-        // Calculate Rank locally for display
         let rank = "D";
         if (accuracy === 100) rank = "SS";
         else if (accuracy >= 95) rank = "S";
@@ -269,18 +346,18 @@ export class GameEngine {
         else if (accuracy >= 80) rank = "B";
         else if (accuracy >= 70) rank = "C";
 
-        // Draw basic results to canvas while UI overlay builds
         this.ctx.fillStyle = "rgba(18, 18, 22, 0.9)";
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.fillStyle = "#ff66aa";
         this.ctx.font = "40px sans-serif";
+        this.ctx.textAlign = "center";
+        this.ctx.textBaseline = "alphabetic"; // Reset baseline
         this.ctx.fillText("Map Completed!", this.canvas.width/2, this.canvas.height/2 - 50);
 
         this.showResultsScreen(accuracy, rank);
     }
 
     async showResultsScreen(accuracy, rank) {
-        // Create Results DOM Overlay
         const overlay = document.createElement('div');
         overlay.id = "results-overlay";
         overlay.style.position = "absolute";
@@ -297,7 +374,6 @@ export class GameEngine {
         overlay.style.fontFamily = "sans-serif";
         overlay.style.zIndex = "100";
 
-        // Is it a new PB?
         const isPB = (this.prevBestScore === null || this.score > this.prevBestScore);
 
         overlay.innerHTML = `
@@ -322,11 +398,9 @@ export class GameEngine {
             </div>
         `;
 
-        // The canvas parent should be positioned relative so absolute overlay covers it perfectly
         this.canvas.parentElement.style.position = "relative";
         this.canvas.parentElement.appendChild(overlay);
 
-        // Execute API calls in parallel
         this.saveScore(accuracy);
         this.fetchAiAnalysis(accuracy, isPB);
     }
@@ -337,7 +411,7 @@ export class GameEngine {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    map: this.beatmapFolder.split('/')[1], // Extracts map ID from path
+                    map: this.beatmapFolder.split('/')[1],
                     difficulty: this.difficulty,
                     score: this.score,
                     accuracy: accuracy

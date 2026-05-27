@@ -58,3 +58,99 @@ footer {
     border-top: 1px solid #2a2a35;
     background-color: #1a1a24;
 }
+
+/* =========================================
+   5. Home Page & Horizontal Beatmap Rows
+   ========================================= */
+
+/* Main Page Heading */
+.page-title {
+    text-align: center;
+    color: #ff66aa;
+    margin: 40px 0 25px 0;
+    font-size: 2.2em;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+/* Container limits width and stacks maps cleanly on top of each other */
+.beatmap-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 1050px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Wide Horizontal Row Style - Now Stacking Internally */
+.beatmap-card {
+    background-color: #1a1a24;
+    border-left: 5px solid #ff66aa; /* osu! pink accent line */
+    border-radius: 6px;
+    padding: 22px 28px;
+    display: flex;
+    flex-direction: column; /* Stacks text group and buttons vertically */
+    justify-content: flex-start;
+    align-items: flex-start; /* Aligns all content to the left side */
+    gap: 18px; /* Balanced space between the song data and the buttons underneath */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: transform 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+/* Sleek sliding hover interaction */
+.beatmap-card:hover {
+    transform: translateX(4px);
+    background-color: #20202c;
+    box-shadow: 0 6px 18px rgba(255, 102, 170, 0.12);
+}
+
+/* Top Grouping: Song Labels */
+.beatmap-info {
+    width: 100%;
+}
+
+.beatmap-title {
+    font-size: 1.45em;
+    font-weight: 700;
+    margin: 0 0 4px 0;
+    color: #ffffff;
+}
+
+.beatmap-artist {
+    font-size: 0.95em;
+    color: #888899;
+    margin: 0;
+}
+
+/* Bottom Grouping: Difficulty Selection Box */
+.difficulties-list {
+    display: flex;
+    flex-wrap: wrap; /* Allows wrap-around for maps with high difficulty counts */
+    gap: 10px;
+    justify-content: flex-start; /* Left-aligns pills underneath titles */
+    width: 100%;
+}
+
+/* Refined Pill Play Buttons */
+.difficulty-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background-color: #252533;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 8px 14px;
+    border-radius: 4px;
+    font-size: 0.85em;
+    font-weight: 600;
+    border: 1px solid #343446;
+    transition: all 0.15s ease;
+}
+
+.difficulty-btn:hover {
+    background-color: #ff66aa;
+    border-color: #ff66aa;
+    color: #ffffff;
+    box-shadow: 0 0 10px rgba(255, 102, 170, 0.4);
+}

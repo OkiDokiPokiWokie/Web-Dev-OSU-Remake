@@ -232,7 +232,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
 
 <div class="auth-container">
-    <h1>osu! Web Clone</h1>
+    <h1>OSU!</h1>
     
     <?php if ($error_message): ?>
         <div class="error-msg"><?php echo htmlspecialchars($error_message); ?></div>

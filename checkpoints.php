@@ -25,13 +25,13 @@ Reflection: Added the file reader and audio handler, will be able to test at che
 
 Name: #06-Game-Loop <br>
 Completion Date: May 22, 2026<br>
-Link: <a href="" target="_blank">Commit</a><br>
-Reflection: <br><br>
+Link: <a href="https://github.com/OkiDokiPokiWokie/Web-Dev-OSU-Remake/commit/8205810db75d62f493bdecf6ff67ac27b71d0c1f" target="_blank">Commit</a><br>
+Reflection: Made the game loop Javascript, will test at Checkpoint #7<br><br>
 
 Name: #07-Play-Game-View <br>
-Completion Date: <br>
+Completion Date: May 25, 2026<br>
 Link: <a href="" target="_blank">Commit</a><br>
-Reflection: <br><br>
+Reflection: Fully tested checkpoints 5 and 6. Had to rework the main game loop, the visuals page, and some styling to get it to work properly.<br><br>
 
 Name: #08-Create-Data <br>
 Completion Date: <br>

@@ -1,1 +1,105 @@
-[]
+[
+    {
+        "id": "chocolate_adventure",
+        "title": "Chocolate Adventure feat. Nanahira",
+        "artist": "Neko Hacker",
+        "difficulties": [
+            {
+                "name": "Chocolate Adventure!!",
+                "folder": "beatmaps\/chocolate_adventure\/chocolate_adventure_",
+                "bpm": 170
+            },
+            {
+                "name": "Harumi's Normal",
+                "folder": "beatmaps\/chocolate_adventure\/harumi_s_normal",
+                "bpm": 170
+            },
+            {
+                "name": "TsumugiP's Insane",
+                "folder": "beatmaps\/chocolate_adventure\/tsumugip_s_insane",
+                "bpm": 170
+            },
+            {
+                "name": "daifuku9's Another",
+                "folder": "beatmaps\/chocolate_adventure\/daifuku9_s_another",
+                "bpm": 170
+            },
+            {
+                "name": "eringiRa's Hard",
+                "folder": "beatmaps\/chocolate_adventure\/eringira_s_hard",
+                "bpm": 170
+            }
+        ]
+    },
+    {
+        "id": "chronostasis",
+        "title": "Chronostasis",
+        "artist": "Release Hallucination",
+        "difficulties": [
+            {
+                "name": "Overflowing Darkness",
+                "folder": "beatmaps\/chronostasis\/overflowing_darkness",
+                "bpm": 200
+            }
+        ]
+    },
+    {
+        "id": "crossing_field",
+        "title": "crossing field",
+        "artist": "LiSA",
+        "difficulties": [
+            {
+                "name": "Easy",
+                "folder": "beatmaps\/crossing_field\/easy",
+                "bpm": 179
+            },
+            {
+                "name": "Hard",
+                "folder": "beatmaps\/crossing_field\/hard",
+                "bpm": 179
+            },
+            {
+                "name": "Insane",
+                "folder": "beatmaps\/crossing_field\/insane",
+                "bpm": 179
+            },
+            {
+                "name": "Normal",
+                "folder": "beatmaps\/crossing_field\/normal",
+                "bpm": 179
+            }
+        ]
+    },
+    {
+        "id": "the_world",
+        "title": "the WORLD (TV Size)",
+        "artist": "NIGHTMARE",
+        "difficulties": [
+            {
+                "name": "Amats' Normal",
+                "folder": "beatmaps\/the_world\/amats_normal",
+                "bpm": 190
+            },
+            {
+                "name": "Azumi's Hard",
+                "folder": "beatmaps\/the_world\/azumi_s_hard",
+                "bpm": 190
+            },
+            {
+                "name": "FukA's Expert",
+                "folder": "beatmaps\/the_world\/fuka_s_expert",
+                "bpm": 190
+            },
+            {
+                "name": "Lightspeed",
+                "folder": "beatmaps\/the_world\/lightspeed",
+                "bpm": 190
+            },
+            {
+                "name": "bielsuu's Insane",
+                "folder": "beatmaps\/the_world\/bielsuu_s_insane",
+                "bpm": 190
+            }
+        ]
+    }
+]
