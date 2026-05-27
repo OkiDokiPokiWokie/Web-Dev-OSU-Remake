@@ -1,4 +1,6 @@
 <?php
+//forgot to commit this part of the setup, this is commit: #09-View-Leaderboard
+
 // Include helpers and protect page
 require_once 'includes/auth.php';
 require_once 'includes/json_helpers.php';

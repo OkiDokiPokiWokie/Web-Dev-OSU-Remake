@@ -39,14 +39,14 @@ Link: <a href="https://github.com/OkiDokiPokiWokie/Web-Dev-OSU-Remake/commit/187
 Reflection: Saves data after each play to appropriate data file<br><br>
 
 Name: #09-View-Leaderboard <br>
-Completion Date: <br>
+Completion Date: May 25, 2026<br>
 Link: <a href="" target="_blank">Commit</a><br>
-Reflection: <br><br>
+Reflection: Made leaderboard with filter types as well as an overall view<br><br>
 
 Name: #10-Admin-Dashboard <br>
-Completion Date: <br>
-Link: <a href="" target="_blank">Commit</a><br>
-Reflection: <br><br>
+Completion Date: May 25, 2026<br>
+Link: <a href="https://github.com/OkiDokiPokiWokie/Web-Dev-OSU-Remake/commit/87c4b1666124d81c9c1c2bf2df4a3265af1f4fc3" target="_blank">Commit</a><br>
+Reflection: Initiall admin page set up, no working parts, just the visuals and buttons<br><br>
 
 Name: #11-Admin-Update-Data <br>
 Completion Date: <br>
