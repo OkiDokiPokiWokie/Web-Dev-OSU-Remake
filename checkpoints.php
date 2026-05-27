@@ -30,7 +30,7 @@ Reflection: Made the game loop Javascript, will test at Checkpoint #7<br><br>
 
 Name: #07-Play-Game-View <br>
 Completion Date: May 25, 2026<br>
-Link: <a href="" target="_blank">Commit</a><br>
+Link: <a href="https://github.com/OkiDokiPokiWokie/Web-Dev-OSU-Remake/commit/6e80bb68c72f36aee7a3c9021750aac1d1e72414" target="_blank">Commit</a><br>
 Reflection: Fully tested checkpoints 5 and 6. Had to rework the main game loop, the visuals page, and some styling to get it to work properly.<br><br>
 
 Name: #08-Create-Data <br>
