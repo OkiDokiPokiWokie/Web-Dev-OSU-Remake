@@ -34,9 +34,9 @@ Link: <a href="https://github.com/OkiDokiPokiWokie/Web-Dev-OSU-Remake/commit/6e8
 Reflection: Fully tested checkpoints 5 and 6. Had to rework the main game loop, the visuals page, and some styling to get it to work properly.<br><br>
 
 Name: #08-Create-Data <br>
-Completion Date: <br>
-Link: <a href="" target="_blank">Commit</a><br>
-Reflection: <br><br>
+Completion Date: May 25, 2026<br>
+Link: <a href="https://github.com/OkiDokiPokiWokie/Web-Dev-OSU-Remake/commit/187a2b35e7128954322b985d4740addbf0b85168" target="_blank">Commit</a><br>
+Reflection: Saves data after each play to appropriate data file<br><br>
 
 Name: #09-View-Leaderboard <br>
 Completion Date: <br>
