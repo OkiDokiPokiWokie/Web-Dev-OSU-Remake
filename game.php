@@ -67,19 +67,17 @@ require_once 'includes/header.php';
     }
 
     #osuCanvas {
-        /* Let CSS scale the canvas to fit the screen while locking the 16:9 ratio.
-           The canvas internal resolution is set in the HTML attribute (1920x1080).
-           CSS width/height control how large it appears — we use aspect-ratio to
-           lock 16:9 and let the browser fit it inside the container. */
+        /* Lock the physical element to 16:9 */
         aspect-ratio: 16 / 9;
         width: 100%;
         height: 100%;
         object-fit: contain;
-        background-color: #000;
+
         border: 2px solid #3a3a45;
         border-radius: 8px;
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
         cursor: crosshair;
+
         /* Prevent the drag-to-select issue when clicking fast */
         user-select: none;
         -webkit-user-drag: none;
@@ -87,12 +85,9 @@ require_once 'includes/header.php';
 </style>
 
 <div class="game-container">
-    <!--
-        width and height here set the INTERNAL canvas resolution — 1920x1080.
-        CSS above scales it visually to fit the screen while keeping 16:9.
-        The game engine and parser both work in 1920x1080 coordinate space.
-    -->
-    <canvas id="osuCanvas" width="1920" height="1080"></canvas>
+    <canvas id="osuCanvas" width="1920" height="1080" 
+            style="background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url('/<?php echo htmlspecialchars($folder_path); ?>/bg.jpg') no-repeat center center; background-size: cover;">
+    </canvas>
 </div>
 
 <script>

@@ -40,7 +40,7 @@ Reflection: Saves data after each play to appropriate data file<br><br>
 
 Name: #09-View-Leaderboard <br>
 Completion Date: May 25, 2026<br>
-Link: <a href="" target="_blank">Commit</a><br>
+Link: <a href="https://github.com/OkiDokiPokiWokie/Web-Dev-OSU-Remake/commit/dd29df8da3bf9a297931e7a423523002514a7648" target="_blank">Commit</a><br>
 Reflection: Made leaderboard with filter types as well as an overall view<br><br>
 
 Name: #10-Admin-Dashboard <br>

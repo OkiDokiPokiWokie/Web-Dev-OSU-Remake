@@ -6,5 +6,13 @@
         "role": "admin",
         "created_at": "2026-05-21",
         "pfp": "uploads\/pfp\/user.png"
+    },
+    {
+        "username": "joe",
+        "password_hash": "$2y$12$QYhLpWmulfhMgu2AsQOVNu1fkw\/H2a27nIxeFrJ4p3p3bkVOq2tze",
+        "email": "joe@gmail.com",
+        "role": "user",
+        "created_at": "2026-05-27",
+        "pfp": "uploads\/pfp\/joe.png"
     }
 ]

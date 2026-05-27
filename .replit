@@ -29,7 +29,8 @@ outputType = "webview"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "php -S 0.0.0.0:8080"
+# UPDATED LINE: Using inline -d flags instead of a custom php.ini file
+args = "php -S 0.0.0.0:8080 -d upload_max_filesize=1024M -d post_max_size=1030M -d memory_limit=512M -d max_execution_time=600 -d max_input_time=600"
 waitForPort = 8080
 
 [agent]

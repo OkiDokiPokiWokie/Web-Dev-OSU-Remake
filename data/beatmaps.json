@@ -101,5 +101,42 @@
                 "bpm": 190
             }
         ]
+    },
+    {
+        "id": "the_deep_striker",
+        "title": "THE DEEP STRIKER",
+        "artist": "L.E.D.-G",
+        "difficulties": [
+            {
+                "name": "ADVANCED",
+                "folder": "beatmaps\/the_deep_striker\/",
+                "bpm": 173
+            },
+            {
+                "name": "HYPER",
+                "folder": "beatmaps\/the_deep_striker\/",
+                "bpm": 173
+            },
+            {
+                "name": "LEGGENDARIA",
+                "folder": "beatmaps\/the_deep_striker\/",
+                "bpm": 173
+            },
+            {
+                "name": "Nemis' ANOTHER",
+                "folder": "beatmaps\/the_deep_striker\/emis",
+                "bpm": 173
+            },
+            {
+                "name": "P_O's NORMAL",
+                "folder": "beatmaps\/the_deep_striker\/s",
+                "bpm": 173
+            },
+            {
+                "name": "yyy's ANOTHER",
+                "folder": "beatmaps\/the_deep_striker\/yyy_s",
+                "bpm": 173
+            }
+        ]
     }
 ]

@@ -145,6 +145,11 @@ require_once 'includes/header.php';
         color: white;
         border-radius: 4px;
     }
+
+    /* NEW RULE: This forces the text box to expand and fill the remaining space */
+    .upload-form input[type="text"] {
+        flex: 1;
+    }
 </style>
 
 <div class="admin-container">
@@ -188,7 +193,7 @@ require_once 'includes/header.php';
 
         <form class="upload-form" action="/api/admin/upload_beatmap.php" method="POST" enctype="multipart/form-data">
             <strong>Upload New Map:</strong>
-            <input type="text" name="folder_id" placeholder="folder_name (no spaces)" required pattern="[a-z0-9_]+">
+            <input type="text" name="folder_id" placeholder="folder_name (no spaces, no capitals, no special characters)" required pattern="[a-z0-9_]+">
             <input type="file" name="osz_file" accept=".osz" required>
             <button type="submit" class="btn btn-primary">Upload & Process</button>
         </form>
@@ -255,7 +260,6 @@ require_once 'includes/header.php';
                     <th>Score</th>
                     <th>Accuracy</th>
                     <th>Rank</th>
-                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -268,17 +272,10 @@ require_once 'includes/header.php';
                     <td style="font-weight: bold;"><?php echo number_format($s['score']); ?></td>
                     <td><?php echo number_format($s['accuracy'], 1); ?>%</td>
                     <td style="font-weight: bold;"><?php echo get_rank($s['accuracy']); ?></td>
-                    <td>
-                        <form action="/api/admin/delete_score.php" method="POST" onsubmit="return confirm('Delete this score?');">
-                            <input type="hidden" name="username" value="<?php echo htmlspecialchars($s['username']); ?>">
-                            <input type="hidden" name="score_key" value="<?php echo htmlspecialchars($s['score_key']); ?>">
-                            <button type="submit" class="btn btn-danger" style="padding: 4px 8px; font-size: 0.75em;">Delete</button>
-                        </form>
-                    </td>
                 </tr>
                 <?php endforeach; ?>
                 <?php if (empty($top_50_scores)): ?>
-                <tr><td colspan="8" style="text-align:center; color:#888;">No scores recorded yet.</td></tr>
+                <tr><td colspan="7" style="text-align:center; color:#888;">No scores recorded yet.</td></tr>
                 <?php endif; ?>
             </tbody>
         </table>

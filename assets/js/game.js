@@ -159,8 +159,8 @@ export class GameEngine {
     }
 
     drawLoading() {
-        this.ctx.fillStyle = "#121216";
-        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+        // Clear canvas cleanly so the element's CSS background image shows through
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.fillStyle = "#ff66aa";
         this.ctx.font = "24px sans-serif";
         this.ctx.textAlign = "center";
@@ -168,8 +168,8 @@ export class GameEngine {
     }
 
     drawStartScreen() {
-        this.ctx.fillStyle = "#121216";
-        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+        // Clear canvas cleanly so the element's CSS background image shows through
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.fillStyle = "#ffffff";
         this.ctx.font = "30px sans-serif";
         this.ctx.textAlign = "center";
@@ -188,8 +188,9 @@ export class GameEngine {
         if (this.isGameEnded) return;
 
         const currentTime = this.audioHandler.getCurrentTime();
-        this.ctx.fillStyle = "#121216";
-        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
+        // Clear the canvas cleanly so the CSS background image shows through!
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
         // Manage visible objects
         this.visibleObjects = this.hitObjects.filter(obj => {
