@@ -14,5 +14,13 @@
         "role": "user",
         "created_at": "2026-05-27",
         "pfp": "uploads\/pfp\/joe.png"
+    },
+    {
+        "username": "bob",
+        "password_hash": "$2y$12$mee8AIFwlb8YYllso.l\/BelEHA0O5us3lvyhIG4uuukynr08nelRe",
+        "email": "bob@gmail.com",
+        "role": "user",
+        "created_at": "2026-05-28",
+        "pfp": "assets\/img\/default-pfp.png"
     }
 ]

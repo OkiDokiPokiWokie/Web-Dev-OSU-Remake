@@ -49,9 +49,9 @@ Link: <a href="https://github.com/OkiDokiPokiWokie/Web-Dev-OSU-Remake/commit/87c
 Reflection: Initiall admin page set up, no working parts, just the visuals and buttons<br><br>
 
 Name: #11-Admin-Update-Data <br>
-Completion Date: <br>
-Link: <a href="" target="_blank">Commit</a><br>
-Reflection: <br><br>
+Completion Date: May 27, 2026<br>
+Link: <a href="https://github.com/OkiDokiPokiWokie/Web-Dev-OSU-Remake/commit/f9286dd8754f0fb92e8a9607dab1e2df75128c81" target="_blank">Commit</a><br>
+Reflection: Made the admin page features, fixed game play feature bug where the background image wouldnt show. Fixed bug with file uploading and file size limit errors.<br><br>
 
 Name: #12-AI-Feature <br>
 Completion Date: <br>

@@ -2,6 +2,7 @@
 // Include helper functions and protect the page
 require_once 'includes/auth.php';
 require_once 'includes/json_helpers.php';
+require_once 'includes/groq_helpers.php'; // 1. Added Groq helper
 require_login();
 
 // 1. Determine which user profile to show
@@ -37,6 +38,51 @@ foreach ($beatmaps as $b) {
 }
 
 $is_own_profile = ($target_username === current_user());
+
+// 5. SERVER-SIDE AI GENERATION: Pre-calculate metrics to keep the AI short and accurate
+$system_prompt = "You are a casual, fun rhythm game companion analyzer. Provide a quick, bite-sized breakdown of the player's performance based on their stats. Do NOT write paragraphs, intros, or an essay. Output ONLY 3 to 4 short, punchy bullet points highlighting their best score, their lowest accuracy map, and their general average accuracy. Keep it casual, extremely brief, and game-focused.";
+
+$user_prompt = "Player: {$target_username}\n";
+
+if (empty($scores)) {
+    $user_prompt .= "This player has no recorded scores yet. Ask them to click some circles first!";
+} else {
+    // Let's compute quick stats to feed the AI exactly what it needs
+    $total_plays = count($scores);
+    $total_acc = 0;
+    $best_map = "";
+    $best_score = -1;
+    $worst_map = "";
+    $worst_acc = 101;
+
+    foreach ($scores as $key => $data) {
+        list($song_id, $difficulty) = explode(':', $key);
+        $title = $beatmap_titles[$song_id] ?? $song_id;
+        $full_title = "{$title} [{$difficulty}]";
+
+        $total_acc += $data['accuracy'];
+
+        if ($data['score'] > $best_score) {
+            $best_score = $data['score'];
+            $best_map = $full_title;
+        }
+        if ($data['accuracy'] < $worst_acc) {
+            $worst_acc = $data['accuracy'];
+            $worst_map = $full_title;
+        }
+    }
+
+    $avg_acc = round($total_acc / $total_plays, 1);
+
+    $user_prompt .= "Stats Summary:\n";
+    $user_prompt .= "- Total Maps Played: {$total_plays}\n";
+    $user_prompt .= "- Average Accuracy: {$avg_acc}%\n";
+    $user_prompt .= "- Best Performance: {$best_map} (Score: " . number_format($best_score) . ")\n";
+    $user_prompt .= "- Hardest Time / Lowest Accuracy: {$worst_map} (Accuracy: {$worst_acc}%)\n";
+}
+
+// Execute the call while the page loads
+$ai_summary = call_groq($user_prompt, $system_prompt);
 ?>
 
 <style>
@@ -116,6 +162,33 @@ $is_own_profile = ($target_username === current_user());
         font-size: 1.1em;
     }
 
+    /* AI Summary CSS */
+    .ai-summary-box {
+        background: rgba(25, 25, 35, 0.95);
+        border: 1px solid #3a3a45;
+        border-radius: 12px;
+        padding: 25px;
+        margin-bottom: 30px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .ai-summary-box h3 {
+        margin-top: 0;
+        margin-bottom: 15px;
+        color: #ffffff;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .ai-summary-box p {
+        color: #bbbbcc;
+        line-height: 1.6;
+        margin: 0;
+        /* Critical: preserves the AI's bullet points line breaks cleanly */
+        white-space: pre-line; 
+    }
+
     .scores-section h2 {
         color: #ff66aa;
         margin-bottom: 20px;
@@ -191,6 +264,11 @@ $is_own_profile = ($target_username === current_user());
             </h1>
             <p>Joined: <?php echo htmlspecialchars($target_user['created_at']); ?></p>
         </div>
+    </div>
+
+    <div class="ai-summary-box">
+        <h3><span style="color: #ff66aa;">✦</span> AI Playstyle Breakdown</h3>
+        <p><?php echo htmlspecialchars($ai_summary); ?></p>
     </div>
 
     <div class="scores-section">
